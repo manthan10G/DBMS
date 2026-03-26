@@ -1,0 +1,82 @@
+Name: 	Manthan Gujar
+
+PROCEDURE TO DISPLAY THE CONTENT PF THE TABLE: ST_INFO
+
+set serveroutput on
+create or replace procedure st_show
+as
+s_roll st_info.roll%type;
+s_name st_info.name%type;
+s_sub1 st_info.sub1%type;
+s_sub2 st_info.sub2%type;
+s_sub3 st_info.sub3%type;
+s_sub4 st_info.sub4%type;
+BEGIN
+   SELECT roll, name, sub1, sub2, sub3, sub4
+   INTO s_roll, s_name, s_sub1, s_sub2, s_sub3, s_sub4
+   FROM st_info;
+   DBMS_OUTPUT.PUT_LINE('Roll No : ' || s_roll);
+   DBMS_OUTPUT.PUT_LINE('Name of the student : ' || s_name);
+   DBMS_OUTPUT.PUT_LINE('Marks of Sub1 : ' || s_sub1);
+   DBMS_OUTPUT.PUT_LINE('Marks of Sub2 : ' || s_sub2);
+   DBMS_OUTPUT.PUT_LINE('Marks of Sub3 : ' || s_sub3);
+   DBMS_OUTPUT.PUT_LINE('Marks of Sub4 : ' || s_sub4);
+END;
+/
+
+
+
+
+
+create or replace procedure show_st(rno number)
+as
+s_roll st_info.roll%type;
+s_name st_info.name%type;
+s_sub1 st_info.sub1%type;
+s_sub2 st_info.sub2%type;
+s_sub3 st_info.sub3%type;
+s_sub4 st_info.sub4%type;
+s_total number;
+s_perc number(5,2);
+
+begin
+    select roll, name, sub1, sub2, sub3, sub4 into
+    s_roll, s_name, s_sub1, s_sub2, s_sub3, s_sub4 from st_info where roll = rno;
+    s_total := s_sub1 + s_sub2 + s_sub3 + s_sub4;	
+    s_perc := s_total / 4;
+    dbms_output.put_line('Roll No : ' || s_roll);
+    dbms_output.put_line('Name of the student : ' || s_name);
+    dbms_output.put_line('Marks of Sub1 : ' || s_sub1);
+    dbms_output.put_line('Marks of Sub2 : ' || s_sub2);
+    dbms_output.put_line('Marks of Sub3 : ' || s_sub3);
+    dbms_output.put_line('Marks of Sub4 : ' || s_sub4);
+    dbms_output.put_line('Total Marks : ' || s_total);
+    dbms_output.put_line('Percentage : ' || s_perc);
+
+ if s_sub1 >= 50 and s_sub2 >= 50 and s_sub3 >= 50 and s_sub4 >= 50 then
+        dbms_output.put_line('Result : PASS');
+    else
+        dbms_output.put_line('Result : FAIL');
+    end if;
+
+end;
+/
+
+
+
+------------------output--------------------------
+Procedure created.
+
+SQL> exec show_st(7);
+Roll No : 7
+Name of the student : Karan
+Marks of Sub1 : 70
+Marks of Sub2 : 72
+Marks of Sub3 : 68
+Marks of Sub4 : 75
+Total Marks : 285
+Percentage : 71.25
+Result : PASS
+
+PL/SQL procedure successfully completed.
+-------------------------------------------------
